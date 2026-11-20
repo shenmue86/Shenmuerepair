@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>shenmuerepair | صيانة وإصلاح الأجهزة</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --surface: #111827;
+      --surface-2: #192234;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #f59e0b;
+      --border: rgba(148, 163, 184, 0.18);
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #132038 0%, var(--bg) 55%);
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
+      background: rgba(9, 13, 22, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+    }
+
+    .brand span {
+      color: var(--accent-2);
+    }
+
+    .lang-switcher {
+      display: flex;
+      gap: 0.4rem;
+      background: var(--surface);
+      padding: 0.25rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      padding: 0.4rem 0.75rem;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #06101d;
+    }
+
+    .hero {
+      padding: 4.5rem 0 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #06101d;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-card {
+      background: linear-gradient(160deg, var(--surface-2), var(--surface));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.6rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .stat-box {
+      background: rgba(9, 13, 22, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .stat-num {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--accent-2);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    section {
+      padding: 3rem 0;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.45rem;
+      color: var(--accent);
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .booking-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.8rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.72rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .contact-panel {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: fit-content;
+    }
+
+    .email-highlight {
+      font-weight: 700;
+      color: var(--accent);
+      word-break: break-all;
+    }
+
+    .status-msg {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #6ee7b7;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.6rem 0;
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-wrap">
+      <a href="#" class="brand">shenmue<span>repair</span></a>
+
+      <div class="lang-switcher" role="group" aria-label="Language Switcher">
+        <button type="button" class="lang-btn active" data-lang="ar">العربية</button>
+        <button type="button" class="lang-btn" data-lang="en">English</button>
+        <button type="button" class="lang-btn" data-lang="fr">Français</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container" style="display: contents;">
+        <div>
+          <span class="badge" id="t-badge">صيانة سريعة وموثوقة</span>
+          <h1 id="t-hero-title">إصلاح أجهزتك بدقة واحترافية مع shenmuerepair</h1>
+          <p id="t-hero-desc">
+            نوفر خدمات فحص وإصلاح الهواتف، الحواسيب، والأجهزة الإلكترونية بقطع غيار موثوقة ومتابعة واضحة من لحظة الاستلام حتى التسليم.
+          </p>
+          <div class="btn-group">
+            <a href="#booking" class="btn btn-primary" id="t-cta-book">احجز صيانة الآن</a>
+            <a href="#services" class="btn btn-outline" id="t-cta-services">استعرض الخدمات</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <h2 id="t-card-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">لماذا يختارنا العملاء؟</h2>
+          <p id="t-card-sub" style="color: var(--muted); font-size: 0.92rem;">تشخيص دقيق قبل البدء بأي إصلاح مع شفافية كاملة.</p>
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-num">24h</div>
+              <div class="stat-label" id="t-stat-1">فحص وتشخيص سريع</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">100%</div>
+              <div class="stat-label" id="t-stat-2">متابعة مباشرة للطلب</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">3</div>
+              <div class="stat-label" id="t-stat-3">لغات مدعومة بالكامل</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">AR / EN / FR</div>
+              <div class="stat-label" id="t-stat-4">تواصل مريح للجميع</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title" id="t-services-title">خدمات الصيانة</h2>
+        <p class="section-sub" id="t-services-sub">اختر نوع الجهاز ليتم تعبئته تلقائياً في نموذج الحجز.</p>
+
+        <div class="services-grid">
+          <article class="card">
+            <div>
+              <h3 id="t-s1-title">الهواتف الذكية والأجهزة اللوحية</h3>
+              <p id="t-s1-desc">تبديل الشاشات، البطاريات، منافذ الشحن، وإصلاح أعطال النظام والبرمجيات.</p>
+            </div>
+            <button type="button" class="btn btn-outline select-service-btn" data-service="Smartphone / Tablet" id="t-s1-btn">اختر هذه الخدمة</button>
+          </article>
+
+          <article class="card">
+            <div>
+              <h3 id="t-s2-title">الحواسيب المحمولة والمكتبية</h3>
+              <p id="t-s2-desc">تنظيف حراري، ترقية الذاكرة والتخزين، وإصلاح الأعطال التقنية والنظام.</p>
+            </div>
+            <button type="button" class="btn btn-outline select-service-btn" data-service="Laptop / Desktop" id="t-s2-btn">اختر هذه الخدمة</button>
+          </article>
+
+          <article class="card">
+            <div>
+              <h3 id="t-s3-title">الأجهزة الإلكترونية والمنزلية</h3>
+              <p id="t-s3-desc">فحص الدوائر الإلكترونية وإعادة تشغيل الأجهزة المتوقفة بكفاءة عالية.</p>
+            </div>
+            <button type="button" class="btn btn-outline select-service-btn" data-service="Electronics & Appliances" id="t-s3-btn">اختر هذه الخدمة</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking">
+      <div class="container">
+        <h2 class="section-title" id="t-booking-title">حجز طلب صيانة</h2>
+        <p class="section-sub" id="t-booking-sub">أدخل بياناتك ووصف العطل وسيتم توجيه الطلب إلى بريد المالك.</p>
+
+        <div class="booking-box">
+          <form id="repairForm">
+            <div>
+              <label for="clientName" id="t-lbl-name">الاسم الكامل</label>
+              <input type="text" id="clientName" name="name" required placeholder="مثال: يوسف أحمد" />
+            </div>
+
+            <div>
+              <label for="clientPhone" id="t-lbl-phone">رقم الهاتف أو وسيلة التواصل</label>
+              <input type="text" id="clientPhone" name="phone" required placeholder="+212 6XX XXX XXX" />
+            </div>
+
+            <div>
+              <label for="deviceType" id="t-lbl-device">نوع الجهاز</label>
+              <select id="deviceType" name="device">
+                <option value="Smartphone / Tablet" id="t-opt-1">هاتف ذكي أو جهاز لوحي</option>
+                <option value="Laptop / Desktop" id="t-opt-2">حاسوب محمول أو مكتبي</option>
+                <option value="Electronics & Appliances" id="t-opt-3">جهاز إلكتروني / منزلي</option>
+                <option value="Other" id="t-opt-4">أخرى</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="issueDesc" id="t-lbl-issue">وصف المشكلة</label>
+              <textarea id="issueDesc" name="message" rows="4" required placeholder="اشرح العطل باختصار..."></textarea>
+            </div>
+
+            <div class="btn-group">
+              <button type="submit" class="btn btn-primary" id="t-submit-btn">إرسال طلب الصيانة</button>
+              <button type="button" class="btn btn-outline" id="t-mailto-btn">فتح عبر تطبيق البريد</button>
+            </div>
+
+            <div class="status-msg" id="statusMessage"></div>
+          </form>
+
+          <aside class="contact-panel">
+            <h3 id="t-contact-title" style="font-size: 1.15rem; color: var(--accent-2);">البريد المباشر للمالك</h3>
+            <p id="t-contact-desc" style="color: var(--muted); font-size: 0.92rem;">
+              يتم ربط إدارة الطلبات والتواصل المباشر ببريد المالك الرسمي:
+            </p>
+            <div>
+              <a href="mailto:Fatheofjoy@gmail.com" class="email-highlight">Fatheofjoy@gmail.com</a>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline" id="t-copy-btn">نسخ البريد الإلكتروني</button>
+            </div>
+            <p id="t-copy-note" style="color: var(--muted); font-size: 0.82rem;"></p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>shenmuerepair — <span id="t-footer-owner">المالك:</span> <span class="email-highlight">Fatheofjoy@gmail.com</span></div>
+      <div id="t-footer-rights">© 2026 shenmuerepair</div>
+    </div>
+  </footer>
+
+  <script>
+    const OWNER_EMAIL = "Fatheofjoy@gmail.com";
+    const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+
+    const translations = {
+      ar: {
+        dir: "rtl",
+        lang: "ar",
+        badge: "صيانة سريعة وموثوقة",
+        heroTitle: "إصلاح أجهزتك بدقة واحترافية مع shenmuerepair",
+        heroDesc: "نوفر خدمات فحص وإصلاح الهواتف، الحواسيب، والأجهزة الإلكترونية بقطع غيار موثوقة ومتابعة واضحة من لحظة الاستلام حتى التسليم.",
+        ctaBook: "احجز صيانة الآن",
+        ctaServices: "استعرض الخدمات",
+        cardTitle: "لماذا يختارنا العملاء؟",
+        cardSub: "تشخيص دقيق قبل البدء بأي إصلاح مع شفافية كاملة.",
+        stat1: "فحص وتشخيص سريع",
+        stat2: "متابعة مباشرة للطلب",
+        stat3: "لغات مدعومة بالكامل",
+        stat4: "تواصل مريح للجميع",
+        servicesTitle: "خدمات الصيانة",
+        servicesSub: "اختر نوع الجهاز ليتم تعبئته تلقائياً في نموذج الحجز.",
+        s1Title: "الهواتف الذكية والأجهزة اللوحية",
+        s1Desc: "تبديل الشاشات، البطاريات، منافذ الشحن، وإصلاح أعطال النظام والبرمجيات.",
+        s2Title: "الحواسيب المحمولة والمكتبية",
+        s2Desc: "تنظيف حراري، ترقية الذاكرة والتخزين، وإصلاح الأعطال التقنية والنظام.",
+        s3Title: "الأجهزة الإلكترونية والمنزلية",
+        s3Desc: "فحص الدوائر الإلكترونية وإعادة تشغيل الأجهزة المتوقفة بكفاءة عالية.",
+        selectBtn: "اختر هذه الخدمة",
+        bookingTitle: "حجز طلب صيانة",
+        bookingSub: "أدخل بياناتك ووصف العطل وسيتم توجيه الطلب إلى بريد المالك.",
+        lblName: "الاسم الكامل",
+        lblPhone: "رقم الهاتف أو وسيلة التواصل",
+        lblDevice: "نوع الجهاز",
+        lblIssue: "وصف المشكلة",
+        opt1: "هاتف ذكي أو جهاز لوحي",
+        opt2: "حاسوب محمول أو مكتبي",
+        opt3: "جهاز إلكتروني / منزلي",
+        opt4: "أخرى",
+        submitBtn: "إرسال طلب الصيانة",
+        mailtoBtn: "فتح عبر تطبيق البريد",
+        contactTitle: "البريد المباشر للمالك",
+        contactDesc: "يتم ربط إدارة الطلبات والتواصل المباشر ببريد المالك الرسمي:",
+        copyBtn: "نسخ البريد الإلكتروني",
+        copiedMsg: "تم نسخ البريد الإلكتروني بنجاح.",
+        footerOwner: "المالك:",
+        submittedMailto: "تم فتح تطبيق البريد الإلكتروني لتوجيه الطلب إلى Fatheofjoy@gmail.com.",
+        submittedApi: "تم استلام طلبك بنجاح وسيتم مراجعته عبر Fatheofjoy@gmail.com."
+      },
+      en: {
+        dir: "ltr",
+        lang: "en",
+        badge: "Fast & Reliable Repair",
+        heroTitle: "Precision Device Repair with shenmuerepair",
+        heroDesc: "Diagnostic and repair services for smartphones, laptops, and electronics with clear tracking from drop-off to pickup.",
+        ctaBook: "Book a Repair",
+        ctaServices: "Explore Services",
+        cardTitle: "Why Customers Choose Us",
+        cardSub: "Clear diagnostics before any repair starts with full transparency.",
+        stat1: "Fast Diagnostics",
+        stat2: "Direct Request Tracking",
+        stat3: "Languages Supported",
+        stat4: "Accessible Communication",
+        servicesTitle: "Repair Services",
+        servicesSub: "Select a device type to pre-fill it in the booking form.",
+        s1Title: "Smartphones & Tablets",
+        s1Desc: "Screen replacements, batteries, charging ports, and software/OS troubleshooting.",
+        s2Title: "Laptops & Desktops",
+        s2Desc: "Thermal maintenance, RAM/storage upgrades, and hardware/system fixes.",
+        s3Title: "Electronics & Appliances",
+        s3Desc: "Circuit inspection and restoring non-working devices reliably.",
+        selectBtn: "Select Service",
+        bookingTitle: "Book a Repair Request",
+        bookingSub: "Enter your details and issue description to route the request to the owner email.",
+        lblName: "Full Name",
+        lblPhone: "Phone or Contact Info",
+        lblDevice: "Device Type",
+        lblIssue: "Issue Description",
+        opt1: "Smartphone / Tablet",
+        opt2: "Laptop / Desktop",
+        opt3: "Electronics & Appliances",
+        opt4: "Other",
+        submitBtn: "Submit Repair Request",
+        mailtoBtn: "Open in Mail App",
+        contactTitle: "Direct Owner Email",
+        contactDesc: "Request handling and direct contact are linked to the official owner email:",
+        copyBtn: "Copy Email Address",
+        copiedMsg: "Email address copied.",
+        footerOwner: "Owner:",
+        submittedMailto: "Your mail client has been opened addressed to Fatheofjoy@gmail.com.",
+        submittedApi: "Your request has been submitted to Fatheofjoy@gmail.com."
+      },
+      fr: {
+        dir: "ltr",
+        lang: "fr",
+        badge: "Réparation Rapide et Fiable",
+        heroTitle: "Réparation d'appareils précise avec shenmuerepair",
+        heroDesc: "Diagnostic et réparation de smartphones, ordinateurs et appareils électroniques avec un suivi clair jusqu'à la restitution.",
+        ctaBook: "Réserver une réparation",
+        ctaServices: "Voir les services",
+        cardTitle: "Pourquoi nous choisir ?",
+        cardSub: "Un diagnostic clair avant toute intervention en toute transparence.",
+        stat1: "Diagnostic Rapide",
+        stat2: "Suivi Direct",
+        stat3: "Langues Prises en Charge",
+        stat4: "Communication Simple",
+        servicesTitle: "Services de Réparation",
+        servicesSub: "Choisissez un type d'appareil pour préremplir le formulaire de réservation.",
+        s1Title: "Smartphones et Tablettes",
+        s1Desc: "Remplacement d'écrans, batteries, connecteurs de charge et résolution logicielle.",
+        s2Title: "Ordinateurs Portables et Fixes",
+        s2Desc: "Nettoyage thermique, mise à niveau mémoire/stockage et dépannage système.",
+        s3Title: "Électronique et Équipements",
+        s3Desc: "Contrôle des circuits et remise en service fiable des appareils en panne.",
+        selectBtn: "Choisir ce service",
+        bookingTitle: "Demande de Réparation",
+        bookingSub: "Saisissez vos coordonnées et la panne pour envoyer la demande à l'adresse du propriétaire.",
+        lblName: "Nom complet",
+        lblPhone: "Téléphone ou contact",
+        lblDevice: "Type d'appareil",
+        lblIssue: "Description du problème",
+        opt1: "Smartphone / Tablette",
+        opt2: "Ordinateur portable / fixe",
+        opt3: "Électronique et équipements",
+        opt4: "Autre",
+        submitBtn: "Envoyer la demande",
+        mailtoBtn: "Ouvrir dans la messagerie",
+        contactTitle: "E-mail Direct du Propriétaire",
+        contactDesc: "Le suivi des demandes et le contact direct sont liés à l'adresse officielle du propriétaire :",
+        copyBtn: "Copier l'adresse e-mail",
+        copiedMsg: "Adresse e-mail copiée.",
+        footerOwner: "Propriétaire :",
+        submittedMailto: "Votre application de messagerie s'est ouverte vers Fatheofjoy@gmail.com.",
+        submittedApi: "Votre demande a bien été transmise à Fatheofjoy@gmail.com."
+      }
+    };
+
+    let currentLang = "ar";
+
+    function applyLanguage(lang) {
+      const t = translations[lang] || translations.ar;
+      currentLang = lang;
+      document.documentElement.lang = t.lang;
+      document.documentElement.dir = t.dir;
+
+      document.querySelectorAll(".lang-btn").forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.lang === lang);
+      });
+
+      document.getElementById("t-badge").textContent = t.badge;
+      document.getElementById("t-hero-title").textContent = t.heroTitle;
+      document.getElementById("t-hero-desc").textContent = t.heroDesc;
+      document.getElementById("t-cta-book").textContent = t.ctaBook;
+      document.getElementById("t-cta-services").textContent = t.ctaServices;
+      document.getElementById("t-card-title").textContent = t.cardTitle;
+      document.getElementById("t-card-sub").textContent = t.cardSub;
+      document.getElementById("t-stat-1").textContent = t.stat1;
+      document.getElementById("t-stat-2").textContent = t.stat2;
+      document.getElementById("t-stat-3").textContent = t.stat3;
+      document.getElementById("t-stat-4").textContent = t.stat4;
+      document.getElementById("t-services-title").textContent = t.servicesTitle;
+      document.getElementById("t-services-sub").textContent = t.servicesSub;
+      document.getElementById("t-s1-title").textContent = t.s1Title;
+      document.getElementById("t-s1-desc").textContent = t.s1Desc;
+      document.getElementById("t-s2-title").textContent = t.s2Title;
+      document.getElementById("t-s2-desc").textContent = t.s2Desc;
+      document.getElementById("t-s3-title").textContent = t.s3Title;
+      document.getElementById("t-s3-desc").textContent = t.s3Desc;
+
+      document.querySelectorAll(".select-service-btn").forEach((btn) => {
+        btn.textContent = t.selectBtn;
+      });
+
+      document.getElementById("t-booking-title").textContent = t.bookingTitle;
+      document.getElementById("t-booking-sub").textContent = t.bookingSub;
+      document.getElementById("t-lbl-name").textContent = t.lblName;
+      document.getElementById("t-lbl-phone").textContent = t.lblPhone;
+      document.getElementById("t-lbl-device").textContent = t.lblDevice;
+      document.getElementById("t-lbl-issue").textContent = t.lblIssue;
+      document.getElementById("t-opt-1").textContent = t.opt1;
+      document.getElementById("t-opt-2").textContent = t.opt2;
+      document.getElementById("t-opt-3").textContent = t.opt3;
+      document.getElementById("t-opt-4").textContent = t.opt4;
+      document.getElementById("t-submit-btn").textContent = t.submitBtn;
+      document.getElementById("t-mailto-btn").textContent = t.mailtoBtn;
+      document.getElementById("t-contact-title").textContent = t.contactTitle;
+      document.getElementById("t-contact-desc").textContent = t.contactDesc;
+      document.getElementById("t-copy-btn").textContent = t.copyBtn;
+      document.getElementById("t-footer-owner").textContent = t.footerOwner;
+    }
+
+    document.querySelectorAll(".lang-btn").forEach((btn) => {
+      btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
+    });
+
+    document.querySelectorAll(".select-service-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const select = document.getElementById("deviceType");
+        select.value = btn.dataset.service;
+        document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
+      });
+    });
+
+    function buildMailtoUrl() {
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
+      const device = document.getElementById("deviceType").value;
+      const message = document.getElementById("issueDesc").value.trim();
+
+      const subject = encodeURIComponent(`shenmuerepair - ${device} - ${name}`);
+      const body = encodeURIComponent(
+        `Name: ${name}\nPhone/Contact: ${phone}\nDevice: ${device}\nIssue: ${message}`
+      );
+      return `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
+    }
+
+    function showStatus(text) {
+      const box = document.getElementById("statusMessage");
+      box.textContent = text;
+      box.style.display = "block";
+    }
+
+    document.getElementById("repairForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const t = translations[currentLang] || translations.ar;
+      const name = document.getElementById("clientName").value.trim();
+      const phone = document.getElementById("clientPhone").value.trim();
+      const device = document.getElementById("deviceType").value;
+      const message = document.getElementById("issueDesc").value.trim();
+
+      if (WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY !== "YOUR_ACCESS_KEY_HERE") {
+        try {
+          const res = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_ACCESS_KEY,
+              subject: `shenmuerepair Request: ${device}`,
+              from_name: name,
+              phone,
+              device,
+              message,
+              to_email: OWNER_EMAIL
+            })
+          });
+          if (res.ok) {
+            showStatus(t.submittedApi);
+            e.target.reset();
+            return;
+          }
+        } catch (_) {
+        }
+      }
+
+      window.location.href = buildMailtoUrl();
+      showStatus(t.submittedMailto);
+    });
+
+    document.getElementById("t-mailto-btn").addEventListener("click", () => {
+      const t = translations[currentLang] || translations.ar;
+      window.location.href = buildMailtoUrl();
+      showStatus(t.submittedMailto);
+    });
+
+    document.getElementById("t-copy-btn").addEventListener("click", async () => {
+      const t = translations[currentLang] || translations.ar;
+      const note = document.getElementById("t-copy-note");
+      try {
+        await navigator.clipboard.writeText(OWNER_EMAIL);
+        note.textContent = t.copiedMsg;
+      } catch (_) {
+        note.textContent = OWNER_EMAIL;
+      }
+    });
+
+    applyLanguage("ar");
+  </script>
+</body>
+</html>
+file:///data/user/0/com.foxdebug.acodefree/files/public/index.html
